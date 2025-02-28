@@ -113,7 +113,7 @@ module.exports = function (webpackEnv) {
       minimize: isEnvProduction,
       minimizer: [
         // This is only used in production mode
-        new ESBuildMinifyPlugin(),
+        // !!! was broken !!!new ESBuildMinifyPlugin(),
         // This is only used in production mode
         new CssMinimizerPlugin(),
       ],
