@@ -18,7 +18,6 @@ let crowTRobot: Player.t = {
   type_: Person,
   firstName: "Crow T",
   lastName: "Robot",
-  cfcId: "000000",
 }
 let drClaytonForrester: Player.t = {
   id: "Dr_Clayton_Forrester_"->id,
@@ -27,7 +26,6 @@ let drClaytonForrester: Player.t = {
   type_: Person,
   firstName: "Clayton",
   lastName: "Forrester",
-  cfcId: "000000",
 }
 let grandyMcMaster: Player.t = {
   id: "Grandy_McMaster______"->id,
@@ -36,7 +34,6 @@ let grandyMcMaster: Player.t = {
   type_: Person,
   firstName: "Grandy",
   lastName: "McMaster",
-  cfcId: "000000",
 }
 let gypsy: Player.t = {
   id: "Gypsy________________"->id,
@@ -45,7 +42,6 @@ let gypsy: Player.t = {
   type_: Person,
   firstName: "Gypsy",
   lastName: "",
-  cfcId: "000000",
 }
 let joelRobinson: Player.t = {
   id: "Joel_Robinson________"->id,
@@ -54,7 +50,6 @@ let joelRobinson: Player.t = {
   type_: Person,
   firstName: "Joel",
   lastName: "Robinson",
-  cfcId: "000000",
 }
 let newbieMcNewberson: Player.t = {
   id: "Newbie_McNewberson___"->id,
@@ -63,7 +58,6 @@ let newbieMcNewberson: Player.t = {
   type_: Person,
   firstName: "Newbie",
   lastName: "McNewberson",
-  cfcId: "000000",
 }
 let tomServo: Player.t = {
   id: "Tom_Servo____________"->id,
@@ -72,7 +66,6 @@ let tomServo: Player.t = {
   type_: Person,
   firstName: "Tom",
   lastName: "Servo",
-  cfcId: "000000",
 }
 let tvsFrank: Player.t = {
   id: "TVs_Frank____________"->id,
@@ -81,7 +74,6 @@ let tvsFrank: Player.t = {
   type_: Person,
   firstName: "TV's",
   lastName: "Frank",
-  cfcId: "000000",
 }
 let cambot: Player.t = {
   id: "Cambot_______________"->id,
@@ -90,7 +82,6 @@ let cambot: Player.t = {
   type_: Person,
   firstName: "Cambot",
   lastName: "",
-  cfcId: "000000",
 }
 let jonah: Player.t = {
   id: "Jonah_Heston_________"->id,
@@ -99,7 +90,6 @@ let jonah: Player.t = {
   type_: Person,
   firstName: "Jonah",
   lastName: "Heston",
-  cfcId: "000000",
 }
 let kinga: Player.t = {
   id: "Kinga_Forrester______"->id,
@@ -108,7 +98,6 @@ let kinga: Player.t = {
   type_: Person,
   firstName: "Kinga",
   lastName: "Forrester",
-  cfcId: "000000",
 }
 let larry: Player.t = {
   id: "Larry_Erhardt________"->id,
@@ -117,7 +106,6 @@ let larry: Player.t = {
   type_: Person,
   firstName: "Larry",
   lastName: "Erhardt",
-  cfcId: "000000",
 }
 let mike: Player.t = {
   id: "Mike_Nelson__________"->id,
@@ -126,7 +114,6 @@ let mike: Player.t = {
   type_: Person,
   firstName: "Mike",
   lastName: "Nelson",
-  cfcId: "000000",
 }
 let observer: Player.t = {
   id: "Observer_Brain_Guy___"->id,
@@ -135,7 +122,6 @@ let observer: Player.t = {
   type_: Person,
   firstName: "Brain",
   lastName: "Guy",
-  cfcId: "000000",
 }
 let pearl: Player.t = {
   id: "Pearl_Forrester______"->id,
@@ -144,7 +130,6 @@ let pearl: Player.t = {
   type_: Person,
   firstName: "Pearl",
   lastName: "Forrester",
-  cfcId: "000000",
 }
 let bobo: Player.t = {
   id: "Professor_Bobo_______"->id,
@@ -153,7 +138,6 @@ let bobo: Player.t = {
   type_: Person,
   firstName: "Bobo",
   lastName: "Professor",
-  cfcId: "000000",
 }
 let tvsSon: Player.t = {
   id: "TVs_Son_of_TVs_Frank_"->id,
@@ -162,7 +146,6 @@ let tvsSon: Player.t = {
   type_: Person,
   firstName: "TV's",
   lastName: "Max",
-  cfcId: "000000",
 }
 let deletedPlayer = "Deleted_Player_______"->id
 

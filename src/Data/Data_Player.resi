@@ -23,7 +23,6 @@ type t = {
   firstName: string,
   id: Data_Id.t,
   lastName: string,
-  cfcId: string,
   matchCount: NatInt.t,
   rating: int,
   type_: Type.t,

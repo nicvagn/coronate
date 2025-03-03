@@ -62,13 +62,12 @@ type t = {
   firstName: string,
   id: Data_Id.t,
   lastName: string,
-  cfcId: string,
   matchCount: NatInt.t,
   rating: int,
   type_: Type.t,
 }
 
-let fullName = t => t.firstName ++ " " ++ t.lastName ++ " cfc:" ++ t.cfcId
+let fullName = t => t.firstName ++ " " ++ t.lastName
 
 let compareName = (a, b) =>
   switch compare(a.firstName, b.firstName) {
@@ -93,10 +92,6 @@ let decode = json => {
     ->Option.flatMap(d => Js.Dict.get(d, "lastName"))
     ->Option.flatMap(Js.Json.decodeString)
     ->Option.getExn,
-    cfcId: d
-    ->Option.flatMap(d => Js.Dict.get(d, "cfcId"))
-    ->Option.flatMap(Js.Json.decodeString)
-    ->Option.getExn,
     matchCount: d
     ->Option.flatMap(d => Js.Dict.get(d, "matchCount"))
     ->Option.flatMap(Js.Json.decodeNumber)
@@ -116,7 +111,6 @@ let encode = data =>
     ("firstName", data.firstName->Js.Json.string),
     ("id", data.id->Data_Id.encode),
     ("lastName", data.lastName->Js.Json.string),
-    ("cfcId", data.cfcId->Js.Json.string),
     ("matchCount", data.matchCount->Belt.Float.fromInt->Js.Json.number),
     ("rating", data.rating->Belt.Float.fromInt->Js.Json.number),
     ("type_", data.type_->Type.encode),
@@ -126,7 +120,6 @@ let dummy = {
   id: Data_Id.dummy,
   firstName: "[Bye]",
   lastName: "",
-  cfcId: "000000",
   type_: Dummy,
   matchCount: 0,
   rating: 0,
@@ -140,7 +133,6 @@ let makeMissing = id => {
   id,
   firstName: "Anonymous",
   lastName: "Player",
-  cfcId: "000000",
   type_: Missing,
   matchCount: 0,
   rating: 0,
