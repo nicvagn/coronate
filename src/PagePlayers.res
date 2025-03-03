@@ -317,7 +317,7 @@ module NewPlayerForm = {
     <form
       onSubmit={event => {
         ReactEvent.Form.preventDefault(event)
-        Form.submit(form, ({firstName, lastName, cfcId, rating, matchCount}) => {
+        Form.submit(form, ({firstName, lastName, rating, cfcId, matchCount}) => {
           let id = Data.Id.random()
           dispatch(Db.Set(id, {Player.firstName, lastName, cfcId, rating, id, type_: Person, matchCount}))
           switch addPlayerCallback {
