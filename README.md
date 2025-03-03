@@ -6,6 +6,8 @@
 
 ## Notice
 
+> I am adding cfc stuff - nrv
+
 Maintenance is currently paused for Coronate. This has almost always been a
 one-person passion project, and there simply isn't time to work on it these
 days. The [version hosted here](https://coronate.netlify.app/) should continue
