@@ -26,12 +26,12 @@ module Form = {
   module FormHelper = Utils.FormHelper
 
   module Input = {
-    type t = {firstName: string, lastName: string, rating: string, matchCount: string}
-    let initial = {firstName: "", lastName: "", rating: "1200", matchCount: "0"}
+    type t = {firstName: string, lastName: string, cfcId: string, rating: string, matchCount: string}
+    let initial = {firstName: "", lastName: "", cfcId: "", rating: "1200", matchCount: "0"}
   }
 
   module Output = {
-    type t = {firstName: string, lastName: string, rating: int, matchCount: Player.NatInt.t}
+    type t = {firstName: string, lastName: string, cfcId: string, rating: int, matchCount: Player.NatInt.t}
   }
 
   module Validate = {
@@ -44,6 +44,12 @@ module Form = {
       switch lastName {
       | "" => Error("Last name is required")
       | name => Ok(name)
+      }
+    let cfcId = cfcId =>
+      switch cfcId {
+      | "" => Error("CFC id is required")
+      | cfcId => Ok(cfcId)
+        // TODO: Validate
       }
     let rating = rating =>
       switch Int.fromString(rating) {
@@ -63,8 +69,9 @@ module Form = {
       rating: FormHelper.fieldStatus<int>,
       lastName: FormHelper.fieldStatus<string>,
       firstName: FormHelper.fieldStatus<string>,
+      cfcId: FormHelper.fieldStatus<string>,
     }
-    let initial = {matchCount: Pristine, rating: Pristine, lastName: Pristine, firstName: Pristine}
+    let initial = {matchCount: Pristine, rating: Pristine, lastName: Pristine, firstName: Pristine, cfcId: Pristine}
   }
 
   type action =
@@ -72,10 +79,12 @@ module Form = {
     | UpdateRatingField(string)
     | UpdateLastNameField(string)
     | UpdateFirstNameField(string)
+    | UpdateCfcIdField(string)
     | BlurMatchCountField
     | BlurRatingField
     | BlurLastNameField
     | BlurFirstNameField
+    | BlurCfcIdField
     | Submit(Output.t => unit)
     | Reset
 
@@ -102,24 +111,30 @@ module Form = {
     | Pristine => Validate.firstName(input.firstName)
     | Dirty(result) => result
     }
-    switch (matchCountResult, ratingResult, lastNameResult, firstNameResult) {
-    | (Ok(matchCount), Ok(rating), Ok(lastName), Ok(firstName)) =>
+    let cfcIdResult  = switch fieldStatuses.cfcId {
+    | Pristine => Validate.cfcId(input.cfcId)
+    | Dirty(result) => result
+    }
+    switch (matchCountResult, ratingResult, lastNameResult, firstNameResult, cfcIdResult) {
+    | (Ok(matchCount), Ok(rating), Ok(lastName), Ok(firstName), Ok(cfcId)) =>
       FormHelper.Valid({
-        output: {Output.matchCount, rating, lastName, firstName},
+        output: {Output.matchCount, rating, lastName, firstName, cfcId},
         fieldStatuses: {
           FieldStatuses.matchCount: Dirty(matchCountResult),
           rating: Dirty(ratingResult),
           lastName: Dirty(lastNameResult),
           firstName: Dirty(firstNameResult),
+          cfcId: Dirty(cfcIdResult),
         },
       })
-    | (Ok(_) | Error(_), Ok(_) | Error(_), Ok(_) | Error(_), Ok(_) | Error(_)) =>
+    | (Ok(_) | Error(_),  Ok(_) | Error(_), Ok(_) | Error(_), Ok(_) | Error(_), Ok(_) | Error(_)) =>
       Invalid({
         fieldStatuses: {
           matchCount: Dirty(matchCountResult),
           rating: Dirty(ratingResult),
           lastName: Dirty(lastNameResult),
           firstName: Dirty(firstNameResult),
+          cfcId: Dirty(cfcIdResult),
         },
       })
     }
@@ -158,6 +173,14 @@ module Form = {
           fieldStatuses: {
             ...state.fieldStatuses,
             firstName: Dirty(Validate.firstName(nextValue)),
+          },
+        }
+      | UpdateCfcIdField(nextValue) => {
+          ...state,
+          input: {...state.input, cfcId: nextValue},
+          fieldStatuses: {
+            ...state.fieldStatuses,
+            cfcId: Dirty(Validate.cfcId(nextValue)),
           },
         }
       | BlurMatchCountField =>
@@ -200,6 +223,17 @@ module Form = {
         | Some(firstName) => {...state, fieldStatuses: {...state.fieldStatuses, firstName}}
         | None => state
         }
+      | BlurCfcIdField =>
+        let result = FormHelper.validateFieldOnBlurWithValidator(
+          ~input=state.input.cfcId,
+          ~fieldStatus=state.fieldStatuses.cfcId,
+          ~validator=Validate.cfcId,
+        )
+        switch result {
+        | Some(cfcId) => {...state, fieldStatuses: {...state.fieldStatuses, cfcId}}
+        | None => state
+        }
+
       | Submit(onSubmit) =>
         switch state.formStatus {
         | Submitting(_) => state
@@ -232,22 +266,26 @@ module Form = {
   let updateRating = ({dispatch, _}, nextValue) => UpdateRatingField(nextValue)->dispatch
   let updateLastName = ({dispatch, _}, nextValue) => UpdateLastNameField(nextValue)->dispatch
   let updateFirstName = ({dispatch, _}, nextValue) => UpdateFirstNameField(nextValue)->dispatch
+  let updateCfcId = ({dispatch, _}, nextValue) => UpdateCfcIdField(nextValue)->dispatch
   let blurMatchCount = ({dispatch, _}) => BlurMatchCountField->dispatch
   let blurRating = ({dispatch, _}) => BlurRatingField->dispatch
+  let blurCfcId = ({dispatch, _}) => BlurCfcIdField->dispatch
   let blurLastName = ({dispatch, _}) => BlurLastNameField->dispatch
   let blurFirstName = ({dispatch, _}) => BlurFirstNameField->dispatch
   let matchCountResult = ({state, _}) =>
     FormHelper.exposeFieldResult(state.fieldStatuses.matchCount)
   let ratingResult = ({state, _}) => FormHelper.exposeFieldResult(state.fieldStatuses.rating)
+  let cfcIdResult = ({state, _}) => FormHelper.exposeFieldResult(state.fieldStatuses.cfcId)
   let lastNameResult = ({state, _}) => FormHelper.exposeFieldResult(state.fieldStatuses.lastName)
   let firstNameResult = ({state, _}) => FormHelper.exposeFieldResult(state.fieldStatuses.firstName)
   let input = ({state, _}) => state.input
   let dirty = ({state, _}) =>
     switch state.fieldStatuses {
-    | {matchCount: Pristine, rating: Pristine, lastName: Pristine, firstName: Pristine} => false
+    | {matchCount: Pristine, rating: Pristine, cfcId: Pristine, lastName: Pristine, firstName: Pristine} => false
     | {
         matchCount: Pristine | Dirty(_),
         rating: Pristine | Dirty(_),
+        cfcId: Pristine | Dirty(_),
         lastName: Pristine | Dirty(_),
         firstName: Pristine | Dirty(_),
       } => true
@@ -279,9 +317,9 @@ module NewPlayerForm = {
     <form
       onSubmit={event => {
         ReactEvent.Form.preventDefault(event)
-        Form.submit(form, ({firstName, lastName, rating, matchCount}) => {
+        Form.submit(form, ({firstName, lastName, rating, cfcId, matchCount}) => {
           let id = Data.Id.random()
-          dispatch(Db.Set(id, {Player.firstName, lastName, rating, id, type_: Person, matchCount}))
+          dispatch(Db.Set(id, {Player.firstName, lastName, cfcId, rating, id, type_: Person, matchCount}))
           switch addPlayerCallback {
           | None => ()
           | Some(fn) => fn(id)
@@ -314,6 +352,18 @@ module NewPlayerForm = {
           />
         </p>
         {errorNotification(Form.lastNameResult(form))}
+        <p>
+          <label htmlFor="cfcId"> {React.string("CFC id")} </label>
+          <input
+            name="cfcId"
+            type_="string"
+            onBlur={_ => Form.blurCfcId(form)}
+            value=input.cfcId
+            required=true
+            onChange={event => Form.updateCfcId(form, (event->ReactEvent.Form.target)["value"])}
+          />
+        </p>
+        {errorNotification(Form.cfcIdResult(form))}
         <p>
           <label htmlFor="form-newplayer-rating"> {React.string("Rating")} </label>
           <input
@@ -387,6 +437,11 @@ module PlayerList = {
               </Hooks.SortButton>
             </th>
             <th>
+              <Hooks.SortButton data=sorted dispatch=sortDispatch sortColumn=sortLastName>
+                {React.string("CFC id")}
+              </Hooks.SortButton>
+            </th>
+            <th>
               <Hooks.SortButton data=sorted dispatch=sortDispatch sortColumn=sortRating>
                 {React.string("Rating")}
               </Hooks.SortButton>
@@ -407,6 +462,7 @@ module PlayerList = {
               <td className="table__player" colSpan=2>
                 <Link to_=Player(p.id)> {p->Player.fullName->React.string} </Link>
               </td>
+              <td className="table__number"> {p.cfcId->React.string} </td>
               <td className="table__number"> {p.rating->React.int} </td>
               <td className="table__number"> {p.matchCount->Player.NatInt.toInt->React.int} </td>
               <td>
@@ -620,15 +676,16 @@ module Profile = {
     ~configDispatch,
     ~windowDispatch=_ => (),
   ) => {
-    let {id: playerId, firstName, lastName, rating, matchCount: initialMatchCount, type_} = player
+    let {id: playerId, firstName, lastName, cfcId, rating, matchCount: initialMatchCount, type_} = player
     let form = Form.useForm({
       firstName,
       lastName,
+      cfcId,
       rating: Int.toString(rating),
       matchCount: Player.NatInt.toString(initialMatchCount),
     })
     let input = Form.input(form)
-    let playerName = input.firstName ++ " " ++ input.lastName
+    let playerName = input.firstName ++ " " ++ input.lastName ++ " CFC: " ++ input.cfcId
     React.useEffect2(() => {
       windowDispatch(Window.SetTitle("Profile for " ++ playerName))
       Some(() => windowDispatch(SetTitle("")))
@@ -647,11 +704,11 @@ module Profile = {
       <form
         onSubmit={event => {
           ReactEvent.Form.preventDefault(event)
-          Form.submit(form, ({firstName, lastName, rating, matchCount}) =>
+          Form.submit(form, ({firstName, lastName, cfcId, rating, matchCount}) =>
             playersDispatch(
               Db.Set(
                 playerId,
-                {Player.firstName, lastName, matchCount, rating, id: playerId, type_},
+                {Player.firstName, lastName, cfcId, matchCount, rating, id: playerId, type_},
               ),
             )
           )
@@ -678,6 +735,17 @@ module Profile = {
           />
         </p>
         {errorNotification(Form.lastNameResult(form))}
+        <p>
+          <label htmlFor="cfcId"> {React.string("CFC id")} </label>
+          <input
+            value=input.cfcId
+            onBlur={_ => Form.blurCfcId(form)}
+            onChange={event => Form.updateCfcId(form, (event->ReactEvent.Form.target)["value"])}
+            name="cfcId"
+            type_="string"
+          />
+        </p>
+        {errorNotification(Form.cfcIdResult(form))}
         <p>
           <label htmlFor="matchCount"> {React.string("Matches played")} </label>
           <input
