@@ -12,7 +12,7 @@
   "bs-dependencies": [
     "@ryyppy/rescript-promise",
     "@rescript/react",
-    "re-classnames",
+    "rescript-classnames",
     "rescript-webapi",
     "rescript-blossom"
   ],
