@@ -792,7 +792,6 @@ let decode = json => {
     ->Map.map(Tournament.decode),
   }
 }
-
 @module("./fixture-pairing-april-2022.json")
 external fixturePairingApril22: {
   "config": Js.Json.t,
