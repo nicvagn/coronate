@@ -8,15 +8,16 @@
 
 > I am adding cfc stuff - nrv
 
-Maintenance is currently paused for Coronate. This has almost always been a
-one-person passion project, and there simply isn't time to work on it these
-days. The [version hosted here](https://coronate.netlify.app/) should continue
-to work for the indefinite future, and its code will always be open-source.
-Anyone may use the Coronate source code in accordance with its
-[license](./LICENSE).
+OG creator:
+>Maintenance is currently paused for Coronate. This has almost always been a
+>one-person passion project, and there simply isn't time to work on it these
+>days. The [version hosted here](https://coronate.netlify.app/) should continue
+>to work for the indefinite future, and its code will always be open-source.
+>Anyone may use the Coronate source code in accordance with its
+>[license](./LICENSE).
 
-If you have a special interest in working with Coronate that you wish to
-discuss, please still feel free to reach out to me or open a GitHub issue.
+>If you have a special interest in working with Coronate that you wish to
+>discuss, please still feel free to reach out to me or open a GitHub issue.
 
 ## About
 
