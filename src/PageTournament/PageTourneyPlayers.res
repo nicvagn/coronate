@@ -64,15 +64,21 @@ module Selecting = {
                 {React.string("Last name")}
               </Hooks.SortButton>
             </th>
+            <th>
+              <Hooks.SortButton sortColumn=sortLastName data=table dispatch=tableDispatch>
+                {React.string("CFC id")}
+              </Hooks.SortButton>
+            </th>
             <th> {React.string("Select")} </th>
           </tr>
         </thead>
         <tbody>
           {table.table
-          ->Array.map(({Player.id: id, firstName, lastName, _}) =>
+          ->Array.map(({Player.id: id, firstName, lastName, cfcId, _}) =>
             <tr key={id->Data.Id.toString}>
               <td> {React.string(firstName)} </td>
               <td> {React.string(lastName)} </td>
+              <td> {React.string(cfcId)} </td>
               <td>
                 <Externals.VisuallyHidden>
                   <label htmlFor={"select-" ++ id->Data.Id.toString}>
@@ -359,7 +365,7 @@ module PlayerList = {
     ->Array.map(p =>
       <tr key={p.id->Data.Id.toString} className={"player " ++ Player.Type.toString(p.type_)}>
         <td> {p.firstName->React.string} </td>
-        <td> {p.lastName->React.string} </td>
+        <td> {p.cfcId->React.string} </td>
         <td>
           <OptionsForm setTourney tourney byeQueue p />
         </td>

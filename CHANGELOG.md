@@ -1,5 +1,9 @@
 # Changelog
 
+## Fri 07 Mar 2025 - nrv
+
+- added cfc id to player page. Part of a planned cfc overall. cfc - Canadian Chess Federation
+
 ## 2024-01-01
 
 - Enable sorting on more player lists.

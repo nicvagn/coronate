@@ -68,13 +68,14 @@ type t = {
   type_: Type.t,
 }
 
-let fullName = t => t.firstName ++ " " ++ t.lastName
+let fullName = t => t.firstName ++ " " ++ t.lastName ++ t.cfcId
 
 let compareName = (a, b) =>
   switch compare(a.firstName, b.firstName) {
   | 0 => compare(a.lastName, b.lastName)
   | i => i
   }
+
 
 let succMatchCount = t => {...t, matchCount: NatInt.succ(t.matchCount)}
 let predMatchCount = t => {...t, matchCount: NatInt.pred(t.matchCount)}
@@ -126,7 +127,7 @@ let dummy = {
   id: Data_Id.dummy,
   firstName: "[Bye]",
   lastName: "",
-  cfcId: "------",
+  cfcId: "--NA--",
   type_: Dummy,
   matchCount: 0,
   rating: 0,
@@ -140,7 +141,7 @@ let makeMissing = id => {
   id,
   firstName: "Anonymous",
   lastName: "Player",
-  cfcId: "------",
+  cfcId: "--NA--",
   type_: Missing,
   matchCount: 0,
   rating: 0,

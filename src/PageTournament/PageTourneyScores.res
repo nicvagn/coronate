@@ -31,7 +31,7 @@ module ScoreTable = {
       <thead>
         <tr className="pagescores__topheader">
           <th className="title-10" scope="col"> {React.string("Rank")} </th>
-          <th className="title-10" scope="col"> {React.string("Name")} </th>
+          <th className="title-10" scope="col"> {React.string("Name and CFC id") } </th>
           <th className="title-10" scope="col"> {React.string("Score")} </th>
           {switch size {
           | Compact => React.null

@@ -319,6 +319,7 @@ module MatchRow = {
   }
 }
 
+/* tourneys/xxxxx/round/X is the pages */
 module RoundTable = {
   @react.component
   let make = (
