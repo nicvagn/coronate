@@ -68,7 +68,7 @@ type t = {
   type_: Type.t,
 }
 
-let fullName = t => t.firstName ++ " " ++ t.lastName ++ t.cfcId
+let fullName = t => t.firstName ++ " " ++ t.lastName
 
 let compareName = (a, b) =>
   switch compare(a.firstName, b.firstName) {

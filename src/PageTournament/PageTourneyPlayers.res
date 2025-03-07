@@ -365,6 +365,7 @@ module PlayerList = {
     ->Array.map(p =>
       <tr key={p.id->Data.Id.toString} className={"player " ++ Player.Type.toString(p.type_)}>
         <td> {p.firstName->React.string} </td>
+        <td> {p.lastName->React.string} </td>
         <td> {p.cfcId->React.string} </td>
         <td>
           <OptionsForm setTourney tourney byeQueue p />
@@ -409,6 +410,7 @@ let make = (~tournament: LoadTournament.t) => {
                   {React.string("Last name")}
                 </Hooks.SortButton>
               </th>
+              <th>{React.string("CFC id")}</th>
               <th> {React.string("Options")} </th>
             </tr>
           </thead>
