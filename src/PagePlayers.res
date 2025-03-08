@@ -437,9 +437,7 @@ module PlayerList = {
               </Hooks.SortButton>
             </th>
             <th>
-              <Hooks.SortButton data=sorted dispatch=sortDispatch sortColumn=sortLastName>
-                {React.string("CFC id")}
-              </Hooks.SortButton>
+              {React.string("CFC id")}
             </th>
             <th>
               <Hooks.SortButton data=sorted dispatch=sortDispatch sortColumn=sortRating>
