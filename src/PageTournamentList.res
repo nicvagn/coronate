@@ -22,6 +22,8 @@ let make = (~windowDispatch=_ => ()) => {
     ~isDescending=true,
   )
   let (newTourneyName, setNewTourneyName) = React.useState(() => "")
+  let (newTourneyOrganizer, setNewTourneyOrganizer) = React.useState(() => "")
+  let (newTourneyArbiter, setNewTourneyArbiter) = React.useState(() => "")
   let newTourneyDialog = Hooks.useBool(false)
   let helpDialog = Hooks.useBool(false)
   React.useEffect1(() => {
@@ -34,6 +36,8 @@ let make = (~windowDispatch=_ => ()) => {
   }, (tourneys, sortDispatch))
 
   let updateNewName = event => setNewTourneyName(ReactEvent.Form.currentTarget(event)["value"])
+  let updateTourneyOrganizer = event => setNewTourneyOrganizer(ReactEvent.Form.currentTarget(event)["value"])
+  let updateTourneyArbiter = event => setNewTourneyArbiter(ReactEvent.Form.currentTarget(event)["value"])
   let makeTournament = event => {
     ReactEvent.Form.preventDefault(event)
     let id = Data.Id.random()
@@ -129,6 +133,25 @@ let make = (~windowDispatch=_ => ()) => {
                 value=newTourneyName
                 onChange=updateNewName
               />
+              <label htmlFor="tourney-organizer"> {React.string("Organizer:")} </label>
+              <input
+                id="tourney-organizer"
+                name="tourney-organizer"
+                placeholder="tournament organizer"
+                type_="text"
+                value=newTourneyOrganizer
+                onChange=updateTourneyOrganizer
+              />
+              <label htmlFor="tourney-arbiter"> {React.string("Arbiter:")} </label>
+              <input
+                id="tourney-arbiter"
+                name="tourney-arbiter"
+                placeholder="tournament arbiter"
+                type_="text"
+                value=newTourneyArbiter
+                onChange=updateTourneyArbiter
+              />
+
             </p>
             <p>
               <input className="button-primary" type_="submit" value="Create" />
